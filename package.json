@@ -7,7 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -19,5 +23,13 @@
   "bugs": {
     "url": "https://github.com/MNolhan/TP-Final-Git/issues"
   },
-  "homepage": "https://github.com/MNolhan/TP-Final-Git#readme"
+  "homepage": "https://github.com/MNolhan/TP-Final-Git#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "eslint": "^9.38.0",
+    "globals": "^16.4.0"
+  },
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
 }
