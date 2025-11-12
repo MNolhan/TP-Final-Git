@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "dev": "nodemon src/server.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -26,21 +28,28 @@
   "homepage": "https://github.com/MNolhan/TP-Final-Git#readme",
   "devDependencies": {
     "@eslint/js": "^9.38.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.38.0",
     "globals": "^16.4.0",
     "jest": "^30.2.0"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3",
+    "nodemon": "^3.1.11",
     "prettier": "^3.6.2"
   },
   "jest": {
     "testEnvironment": "node",
+    "transform": {},
     "testMatch": [
       "**/tests/**/*.test.js"
     ],
     "coverageDirectory": "coverage",
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "src/models/**/*.js",
+      "src/routes/**/*.js"
     ],
     "coverageThreshold": {
       "global": {
