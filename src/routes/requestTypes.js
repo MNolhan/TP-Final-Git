@@ -39,8 +39,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const { name, description, priority, category } = req.body;
+    const { code, name, description, priority, category } = req.body;
     const doc = await RequestType.create({
+      code,
       name,
       description: description ?? '',
       priority: normalizePriority(priority),
