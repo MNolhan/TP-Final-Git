@@ -1,11 +1,90 @@
-function normalizePriority(p) {
-  const map = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high',
-    critical: 'critical',
-  };
-  return map[String(p ?? '').toLowerCase()] || 'medium';
+import express from "express";
+import RequestType, { PRIORITIES } from "../models/RequestType.js";
+
+export function normalizePriority(p) {
+  const map = { low: "low", medium: "medium", high: "high", critical: "critical" };
+  return map[String(p ?? "").toLowerCase()] || "medium";
 }
 
-module.exports = { normalizePriority };
+const router = express.Router();
+
+// GET /api/request-types?active=true|false
+router.get("/", async (req, res, next) => {
+  try {
+    const { active } = req.query;
+    const filter = {};
+    if (active === "true") filter.isActive = true;
+    if (active === "false") filter.isActive = false;
+
+    const items = await RequestType.find(filter).sort({ createdAt: -1 }).lean();
+    res.json(items);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/request-types/:id
+router.get("/:id", async (req, res, next) => {
+  try {
+    const item = await RequestType.findById(req.params.id).lean();
+    if (!item) return res.status(404).json({ error: "RequestType not found" });
+    res.json(item);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/request-types
+router.post("/", async (req, res, next) => {
+  try {
+    const { name, description, priority } = req.body;
+    const doc = await RequestType.create({
+      name,
+      description: description ?? "",
+      priority: normalizePriority(priority),
+    });
+    res.status(201).json(doc);
+  } catch (err) {
+    if (err?.code === 11000) return res.status(409).json({ error: "name must be unique" });
+    if (err?.name === "ValidationError") return res.status(400).json({ error: err.message });
+    next(err);
+  }
+});
+
+// PUT /api/request-types/:id
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { name, description, priority, isActive } = req.body;
+    const update = {};
+    if (name !== undefined) update.name = name;
+    if (description !== undefined) update.description = description;
+    if (priority !== undefined) update.priority = normalizePriority(priority);
+    if (isActive !== undefined) update.isActive = !!isActive;
+
+    const doc = await RequestType.findByIdAndUpdate(req.params.id, update, {
+      new: true,
+      runValidators: true,
+    }).lean();
+
+    if (!doc) return res.status(404).json({ error: "RequestType not found" });
+    res.json(doc);
+  } catch (err) {
+    if (err?.code === 11000) return res.status(409).json({ error: "name must be unique" });
+    if (err?.name === "ValidationError") return res.status(400).json({ error: err.message });
+    next(err);
+  }
+});
+
+// DELETE /api/request-types/:id
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const doc = await RequestType.findByIdAndDelete(req.params.id).lean();
+    if (!doc) return res.status(404).json({ error: "RequestType not found" });
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+});
+
+export { PRIORITIES };
+export default router;
