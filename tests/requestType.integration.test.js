@@ -1,6 +1,6 @@
 import request from 'supertest';
-import mongoose from "mongoose";
-import { app, server } from "../src/server.js";
+import mongoose from 'mongoose';
+import { app, server } from '../src/server.js';
 import RequestType from '../src/models/RequestType.js';
 
 describe('RequestType API – Tests d’intégration', () => {
