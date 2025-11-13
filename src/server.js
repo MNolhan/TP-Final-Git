@@ -23,10 +23,13 @@ app.use((err, _req, res) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
+let server = null;
+
 connectDB().then(() => {
   app.listen(process.env.PORT || 3000, () =>
     console.log(`🚀 Server running on port ${process.env.PORT || 3000}`),
   );
 });
 
-export { app };
+export { app, server };
+export default app;
