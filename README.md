@@ -34,13 +34,20 @@ L'objectif est d'empêcher toute dégradation du code ou du projet.
 
 Voici les protections appliquées :
 
-✔ Push direct sur main interdit  
-✔ Merge uniquement via Pull Request  
+✔ Push direct sur main interdit
+
+✔ Merge uniquement via Pull Request
+
 ✔ Deux checks CI obligatoires avant merge : - Code Quality (ESLint + Prettier) - Tests (Jest + couverture ≥ 70 %)
+
 ✔ "Require branches to be up to date before merging"
+
 ✔ "Require a Pull Request before merging"
+
 ✔ Interdiction pour les administrateurs de contourner les règles
+
 ✔ Revue du code obligatoire (1 reviewer minimum)
+
 ✔ Empêcher la suppression de la branche main
 
 Grâce à ces règles :
@@ -49,8 +56,13 @@ Grâce à ces règles :
 - Le code doit obligatoirement "passer la CI"
 - On garantit une qualité de code permanente
 
+---
+
+Règle Appliqué sur la branche main :
 ![MainRule1](./assets/MainRule1.png)
 ![MainRule2](./assets/MainRule2.png)
+
+---
 
 - **1.3. Comment créer une Pull Request**
 
@@ -76,7 +88,12 @@ Grâce à ces règles :
 
 6. Cliquer sur "Merge Pull Request"
 
+---
+
+Exemple Pull Request réussi :
 ![PremierPR](./assets/PremierPR.png)
+
+---
 
 ## 2. CI/CD
 
@@ -111,8 +128,17 @@ Les deux checks suivants doivent OBLIGATOIREMENT être verts :
 - Code Quality
 - Tests
 
+---
+
+Jobs Prettier + Eslint
 ![1Job](./assets/1Job.png)
+
+---
+
+Jobs Jest + SuperTest
 ![2Job](./assets/2Job.png)
+
+---
 
 ## 3. INSTALLATION & UTILISATION
 
@@ -184,6 +210,8 @@ POST /api/request-types
   "category": "Support"
 }
 ```
+
+---
 
 Get :
 ![GetTypes](./assets/GetTypes.png)
