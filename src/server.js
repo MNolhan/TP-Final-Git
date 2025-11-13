@@ -29,4 +29,4 @@ connectDB().then(() => {
   );
 });
 
-export { app };
+export default app;
