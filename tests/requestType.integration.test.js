@@ -1,5 +1,6 @@
 import request from 'supertest';
-import app from '../src/server.js';
+import mongoose from "mongoose";
+import { app, server } from "../src/server.js";
 import RequestType from '../src/models/RequestType.js';
 
 describe('RequestType API – Tests d’intégration', () => {
@@ -94,5 +95,10 @@ describe('RequestType API – Tests d’intégration', () => {
     const res = await request(app).get('/api/health');
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('ok');
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+    if (server) server.close();
   });
 });
