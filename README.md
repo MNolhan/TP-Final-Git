@@ -1,15 +1,14 @@
-
 # README – TP Final Git
-
 
 ## 1. WORKFLOW GIT
 
-- __1.1. Organisation du workflow__
+- **1.1. Organisation du workflow**
 
 Le projet utilise un workflow Git professionnel simple, basé sur des branches
 fonctionnelles (feature branches) et des Pull Requests obligatoires.
 
 Workflow utilisé :
+
 ```bash
 main
 │
@@ -28,7 +27,7 @@ main
       - README complet
 ```
 
-- __1.2. Règles de protection de la branche main (IMPORTANT – demandé dans le TP)__
+- **1.2. Règles de protection de la branche main (IMPORTANT – demandé dans le TP)**
 
 La branche "main" a été entièrement verrouillée.
 L'objectif est d'empêcher toute dégradation du code ou du projet.
@@ -37,9 +36,7 @@ Voici les protections appliquées :
 
 ✔ Push direct sur main interdit  
 ✔ Merge uniquement via Pull Request  
-✔ Deux checks CI obligatoires avant merge :
-    - Code Quality (ESLint + Prettier)
-    - Tests (Jest + couverture ≥ 70 %)
+✔ Deux checks CI obligatoires avant merge : - Code Quality (ESLint + Prettier) - Tests (Jest + couverture ≥ 70 %)
 ✔ "Require branches to be up to date before merging"
 ✔ "Require a Pull Request before merging"
 ✔ Interdiction pour les administrateurs de contourner les règles
@@ -47,6 +44,7 @@ Voici les protections appliquées :
 ✔ Empêcher la suppression de la branche main
 
 Grâce à ces règles :
+
 - Toute modification doit obligatoirement passer par une PR
 - Le code doit obligatoirement "passer la CI"
 - On garantit une qualité de code permanente
@@ -54,9 +52,10 @@ Grâce à ces règles :
 ![MainRule1](./assets/MainRule1.png)
 ![MainRule2](./assets/MainRule2.png)
 
-- __1.3. Comment créer une Pull Request__
+- **1.3. Comment créer une Pull Request**
 
 1. Créer une branche :
+
 ```bash
    git checkout -b feature/nom-de-ta-feature
 ```
@@ -64,6 +63,7 @@ Grâce à ces règles :
 2. Faire les modifications
 
 3. Commit + push :
+
 ```bash
    git add .
    git commit -m "feat: description"
@@ -80,69 +80,69 @@ Grâce à ces règles :
 
 ## 2. CI/CD
 
-- __2.1. Badge du statut de la CI__
+- **2.1. Badge du statut de la CI**
 
 ![CI](https://github.com/<TON_USER>/<TON_REPO>/actions/workflows/ci.yml/badge.svg)
 
-- __2.2. Description des jobs configurés__
+- **2.2. Description des jobs configurés**
 
 La CI se compose de deux jobs obligatoires :
 
 ### Job 1 : Code Quality
+
 - Installation des dépendances
 - Exécution d’ESLint
 - Vérification du formatage avec Prettier
 
 But : empêcher un code mal écrit ou mal formaté.
 
-
 ### Job 2 : Tests (Jest + SuperTest)
+
 - Lancement d’une base MongoDB en mode service
 - Installation des dépendances
 - Exécution de Jest avec couverture (> 70 %)
 
 But : empêcher tout merge si les tests échouent.
 
-
-- __2.3. Required Checks__
+- **2.3. Required Checks**
 
 Les deux checks suivants doivent OBLIGATOIREMENT être verts :
+
 - Code Quality
 - Tests
 
 ![1Job](./assets/1Job.png)
 ![2Job](./assets/2Job.png)
 
-
 ## 3. INSTALLATION & UTILISATION
 
-
-- __3.1. Prérequis__
+- **3.1. Prérequis**
 
 - Node.js 18+
 - Docker + Docker Compose
 - npm
 
-
-- __3.2. Installation du projet__
+- **3.2. Installation du projet**
 
 1. Installer les dépendances :
+
 ```bash
    npm install
-   ```
+```
 
 2. Lancer MongoDB :
+
 ```bash
    docker compose up -d
-   ```
+```
 
 3. Seed de la base :
+
 ```bash
    node scripts/seed.js
-   ```
+```
 
-
-- __3.3. Variables d'environnement (.env)__
+- **3.3. Variables d'environnement (.env)**
 
 ```bash
 PORT=
@@ -154,8 +154,7 @@ MONGO_PASS=
 MONGO_DB=
 ```
 
-
-- __3.4. Commandes disponibles__
+- **3.4. Commandes disponibles**
 
 ```bash
 npm run dev          → lance l’API avec nodemon
@@ -166,14 +165,16 @@ npm run format:check → vérifie Prettier
 npm test             → Jest + coverage
 ```
 
-- __3.5. Exemples d'appels API__
+- **3.5. Exemples d'appels API**
 
 GET /api/health
+
 ```bash
 → { "status": "ok" }
 ```
 
 POST /api/request-types
+
 ```bash
 {
   "code": "TECH_ISSUE",
@@ -186,10 +187,14 @@ POST /api/request-types
 
 Get :
 ![GetTypes](./assets/GetTypes.png)
-----
-Post : 
+
+---
+
+Post :
 ![PostType](./assets/PostType.png)
-----
+
+---
+
 Get by ID :
 ![GetTypeID](./assets/GetTypeID.png)
 
@@ -203,14 +208,14 @@ TP-Final-Git/
 ├── src/
 │   ├── config/
 │       └── database.js                 → connexion MongoDB
-│   ├── models/  
+│   ├── models/
 │       └── RequestType.js              → schéma RequestType
-│   ├── routes/  
+│   ├── routes/
 │       └── requestTypes.js             → routes Express
 │   └── server.js                       → serveur Express
 │
 ├── tests/                              → tests Jest + SuperTest
-├── scripts/ 
+├── scripts/
 │       └── seed.js                     → seed de la base de données
 ├── .github/workflows/ci.yml
 ├── .eslintrc
